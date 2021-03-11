@@ -1,0 +1,258 @@
+<?PHP
+
+// ********************************************************************************
+// CuteCode
+// ********************************************************************************
+if($action == "cutecode")
+{
+echo"<html>
+	<head>
+	<title>CuteCode</title>
+    <style type=\"text/css\">
+	<!--
+	 BODY, TD {text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+	 a:active,a:visited,a:link {color: #446488; text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+	 a:hover {font-size : 8pt; color: #000000; font-family: verdana; text-decoration: none; }
+	-->
+	</style>
+	</head>
+	<body bgcolor=#FFFFFF>
+	<script language=\"javascript\" type=\"text/javascript\">
+	<!--
+	function insertcode(type,var1,var2) {
+
+     if(var1 != null){
+      if(var2 == null){ var2='  '; }
+
+	switch(type) {
+		case 'link':
+			code = '<a href=\"' +var1+ '\">' +var2+ '</a>';
+			break;
+		case 'image':
+			code = '<img src=\"' +var1+ '\" alt=\"\" style=\"border: none;\" />';
+			break;
+		case 'bold':
+			code = '<strong>' +var1+ '</strong>';
+			break;
+		case 'italic':
+			code = '<em>' +var1+ '</em>';
+			break;
+		case 'underline':
+			code = '<span style=\"text-decoration: underline;\">' +var1+ '</span>';
+			break;
+		case 'color':
+			code = '<span style=\"color: ' +var1+ '\">' +var2+ '</span>';
+			break;
+		case 'size':
+			code = '<span style=\"font-size: ' +var1+ 'pt\">' +var2+ '</span>';
+			break;
+		case 'font':
+			code = '<span style=\"font-family: ' +var1+ '\">' +var2+ '</span>';
+			break;
+		case 'align':
+			code = '<div style=\"text-align: ' +var1+ '\">' +var2+ '</div>';
+			break;
+		case 'quote':
+			code = '[quote]' +var1+ '[/quote]';
+			break;
+		case 'list':
+			code = '<ul>\\n<li>Text1</li>\\n<li>Text2</li>\\n<li>Text3</li>\\n</ul>';
+			alert('Список должен быть вставлен в текстовое поле');
+			break;
+		default:
+	}
+
+        	code = ' ' + code + ' ';
+            opener.document.addnews.$target.value  += code;
+		    if(document.my.ifClose.checked == true)
+            {
+             opener.document.addnews.$target.focus();
+             window.close();
+             opener.document.addnews.$target.focus();
+            }
+      }
+	}
+	//-->
+	</script>
+    <table border=0 height=280 width=400 cellspacing=\"0\" cellpadding=\"0\">
+
+	<td height=\"15\" colspan=\"2\" width=\"21\">
+	<td height=\"15\" width=\"342\">
+	<tr>
+    <td height=\"15\" colspan=\"2\" width=\"367\">
+    <font size=\"1\" face=\"Verdana\"><b>Быстрые тэги</b></font>
+    <td height=\"15\" width=\"0\">
+	</tr>
+
+	<tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('link', prompt('Впишите полный адрес для ссылки', 'http://'), prompt('Впишите заголовок для web-страницы', '') )\">
+	Вставить ссылку</a>
+	<td height=16 width=\"0\">
+    [link=<font color=\"#808080\">URL</font>]<font color=\"#808080\">Текст</font>[/link]
+	</tr>
+
+    <tr ><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('image', prompt('Впишите путь для изображения:', 'http://') )\">
+	Вставить изображение</a>
+	<td height=16 width=\"0\">
+    [image=<font color=\"#808080\">путь_до_изображения</font>]
+	</tr>
+
+	<tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('quote', prompt('Текст цитаты:', '') )\">
+	Вставить цитату</a>
+	<td height=16 width=\"0\">
+    [quote=<font color=\"#808080\">Имя</font>]<font color=\"#808080\">Текст</font>[/quote]
+	</tr>
+
+    <tr ><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('list', 'none' )\">
+	Вставить список</a>
+	<td height=16 width=\"0\">
+    [list]<font color=\"#808080\">[*]Текст1[*]Текст2</font>[/list]
+	</tr>
+
+    <tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('bold', prompt('Впишите текст, который должен быть ЖИРНЫМ', '') )\">
+	Жирный текст</a>
+
+	<td height=16 width=\"0\">
+    [b]<font color=\"#808080\">Текст</font>[/b]
+	</tr><tr ><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	 <a href=\"javascript:insertcode('italic', prompt('Впишите текст, который должен быть жирным НАКЛОННЫМ', '') )\">
+	Наклонный текст</a>
+	<td height=16 width=\"0\">
+    [i]<font color=\"#808080\">Текст</font>[/i]
+	</tr><tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+
+	&nbsp;
+	<td height=16 width=\"344\">
+	 <a href=\"javascript:insertcode('underline', prompt('Впишите текст, который должен быть жирным ПОДЧЁРКНУТЫМ', '') )\">
+	Подчёркнутый текст</a>
+	<td height=16 width=\"0\">
+    [u]<font color=\"#808080\">Текст</font>[/u]
+	</tr>
+
+
+
+    <tr><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('color', prompt('Впишите цвет  (blue, red, green, fuchsia)',''), prompt('Впишите текст, который будет этого цвета','') )\">
+	Цвет текста</a>
+	<td height=16 width=\"0\">
+    [color=<font color=\"#808080\">ЦВЕТ</font>]<font color=\"#808080\">Текст</font>[/color]
+	</tr><tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('size', prompt('Введите размер текста (в точках)',''), prompt('Впишите текст, который будет этого размера','') )\">
+	Размер текста</a>
+	<td height=16 width=\"0\">
+    [size=<font color=\"#808080\">РАЗМЕР</font>]<font color=\"#808080\">Текст</font>[/size]
+	</tr><tr><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('font', prompt('Введите шрифт (verdana, arial, times, courier)',''), prompt('Впишите текст, который будет соответствовать этому шрифту','') )\">
+	Шрифт текста</a>
+
+	<td height=16 width=\"0\">
+    [font=<font color=\"#808080\">ШРИФТ</font>]<font color=\"#808080\">Текст</font>[/font]
+	</tr><tr bgcolor=#F7F6F4><td height=16 width=\"21\">
+	&nbsp;
+	<td height=16 width=\"344\">
+	<a href=\"javascript:insertcode('align', prompt('Впишите расположение текста (right, left, center, justify)',''), prompt('Впишите текст, который будет соответствовать этому расположению','') )\">
+	Расположение текста</a>
+	<td height=16 width=\"0\">
+    [align=<font color=\"#808080\">РАСПОЛОЖЕНИЕ</font>]<font color=\"#808080\">Текст</font>[/align]
+	</tr><tr>
+	<td  width=21 height=\"57\">
+	&nbsp;<form name=my>
+	<td height=57 colspan=\"2\" width=\"342\">
+
+    <label><input type=checkbox checked name=ifClose> Закрыть это окно после вставления кода</label>
+	</tr></form>
+	</table></body></HTML>";
+}
+else{
+	echoheader("question", "Помощь / О Скрипте");
+
+    echo"<table border=0 cellpading=0 cellspacing=0 width=\"654\" height=\"175\" >
+    <tr>
+    <td width=\"650\" valign=\"middle\" height=\"1\" bgcolor=\"#F7F6F4\" colspan=\"3\">
+    &nbsp; <font size=\"2\"><b>Помощь и поддержка</b></font>&nbsp;
+    </tr>
+    <tr>
+    <td width=\"31\" valign=\"middle\" height=\"70\">
+    &nbsp;&nbsp;
+    <td width=\"619\" valign=\"middle\"  colspan=\"2\" align=justify>
+    Если у вас возникли проблемы с работой скрипта, то ознакомьтесь сначала с <a style='font-size:12px; letter-spacing:0.2pt; font-weight:bold;' href=\"$PHP_SELF?mod=help\">внутренней документацией по CuteNews</a>.
+    Если это вам не помогло, то обратитесь в <a href=\"http://cutephp.com/faq/\" target=\"_blank\">FAQ раздел сайта разработчика</a> или спросите на нашем <a href=\"http://cutephp.com/forum/\" target=\"_blank\">форуме</a>, но для начала ознакомьтесь с файлом readme.html включенным в архив.
+    </tr>
+
+
+
+    <tr>
+    <td width=\"650\" valign=\"middle\" height=\"1\" bgcolor=\"#F7F6F4\" colspan=\"3\">
+    &nbsp;&nbsp;<font size=\"2\"><b>Проверка версий</b></font>
+    </tr>
+    <tr>
+    <td width=\"29\" valign=\"middle\" height=\"24\">
+    <td width=\"100\" valign=\"middle\" height=\"24\">
+    Эта версия
+    <td width=\"523\" valign=\"middle\" height=\"24\">
+    : $config_version_name &nbsp;&nbsp;(build Id - $config_version_id)
+    </tr>
+    <tr>
+    <td width=\"29\" valign=\"middle\" height=\"23\">
+    <td width=\"100\" valign=\"top\" height=\"23\">
+    Новейшая версия
+    <td width=\"521\" valign=\"top\" height=\"23\">
+    : <script type=\"text/javascript\" src=\"http://cutephp.com/cutenews/latest_version_check.php?config_http_script_dir=$config_http_script_dir&mybid=$config_version_id\"></script>
+    </tr>
+
+
+
+    <tr>
+    <td width=\"650\" valign=\"middle\" height=\"1\" bgcolor=\"#F7F6F4\" colspan=\"3\">
+    &nbsp; <font size=\"2\"><b>Оцените наш скрипт</b></font>
+    </tr>
+    <tr>
+    <td width=\"33\" valign=\"middle\" height=\"47\">
+    <p>
+    <form action=\"http://www.hotscripts.com/cgi-bin/rate.cgi\" method=\"POST\" target=\"_blank\">
+    <td width=\"617\" valign=\"middle\" height=\"47\" colspan=\"2\">
+    Пожалуйста оцените скрипт в <a href=\"http://www.hotscripts.com/?RID=11206\" style=\"text-decoration: none\">
+    @ HotScripts.com
+    </a> если хотите. <br><select name=\"rate\" size=\"1\">
+    <option value>-- Выберите оценку --</option>
+    <option value=\"5\" selected >Супер!</option>
+    <option value=\"4\">Очень хорошо</option>
+    <option value=\"3\">Хорошо</option>
+    <option value=\"2\">Плохо</option>
+    <option value=\"1\">Ужасно</option>
+    </select>
+    <input type=\"submit\" value=\"Отправить!\">
+    <input type=\"hidden\" name=\"external\" value=\"1\">
+    <input type=\"hidden\" name=\"ID\" value=\"21011\">
+    </form>
+    </tr>
+    </table>";
+
+	echofooter();
+}
+
+//<!-- Russian release by X-Coders Team [RedCat]: http://x-coders.net -->
+?>

@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<style type="text/css">
+<!--
+a:active,a:visited,a:link {color: #446488; text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+a:hover {color: #00004F; text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+.bborder	{ background-color: #FFFFFF; border: 1px #A7A6B4 solid; }
+BODY {text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+TD {text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt;}
+.header { font-size : 16px; font-weight: bold; color: #808080; font-family: verdana; text-decoration: none; }
+-->
+</style>
+	<title>Установка Cute News v1.3.5</title>
+</head>
+<body>
+<center>
+<table width="642" border="0" cellspacing="0" cellpadding="2">
+<tr><td class="bborder" bgcolor="#FFFFFF" width="777">
+<form method=post action="<?PHP echo $PHP_SELF; ?>">
+<table border=0 cellpadding=0 cellspacing=0 bgcolor="#ffffff" width="746" height="9">
+<tr><td bgcolor="#FFFFFF" width="746" colspan="2" height="15">&nbsp;</td>
+</tr><tr><td bgcolor="#000000" width="903" colspan="2" height="1"><img src="skins/images/blank.gif" width=1 height=1></td>
+</tr><tr><td bgcolor="#F7F6F4" width="903" colspan="2" height="18">
+<font size="2"><b>&nbsp;&nbsp; Установка Cute News v1.3.5</b></font>	</td>
+</tr><tr><td bgcolor="#000000" width="903" colspan="2" height="1"><img src="skins/images/blank.gif" width=1 height=1></td>
+</tr><tr><td bgcolor="#FFFFFF" width="51" height="28">
+&nbsp;<br />
+<img border="0" src="skins/images/info.gif" width="60" height="57">
+</td><td bgcolor="#FFFFFF" width="695" height="28">
+&nbsp;<br />
+<?PHP
+
+$my_path = dirname(__FILE__);
+$my_path = str_replace("\\", "/", substr($my_path, 0, -3));
+if(!file_exists($my_path.'index.php')){
+	$my_path = './';
+}
+
+// ********************************************************************************
+// CHMOD Check
+// ********************************************************************************
+if($action == "chmod_check")
+{
+	echo'<div class="header"> Проверка прав доступа к файлам и папкам</div><br />
+	статистика для файлов, которые должны быть доступны для записи</td></tr></center>
+	<tr>
+
+      <td bgcolor="#FFFFFF" width="51" height="5">
+&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="5">
+<table width="673" height="100%" cellpadding="0">
+  <td width="667" colspan="3">&nbsp;
+  <tr>
+    <td width="303" bgcolor="#F7F6F4" > &nbsp;Файл / Папка
+    <td bgcolor="#F7F6F4" width="150" >Значение доступа
+    <td bgcolor="#F7F6F4" width="210" >Статус
+  </tr>';
+  $important_files = array(
+//                            'index.php',  -> not important ?!? :|
+  							'data/',
+                           );
+
+   if(!$handle = opendir("./data")){ die("<center><font color=red>Не возможно открыть директорию ./data </font>"); }
+   while (false !== ($file = readdir($handle))){
+	if($file != '.' and $file != '..' and $file != '.htaccess' and $file != 'emoticons'){
+    	$important_files[] = "data/$file";
+    }
+   }
+        closedir($handle);
+
+    $chmod_errors = 0;
+    $not_found_errors = 0;
+    foreach($important_files as $file){
+        $file_name = $my_path . $file;
+
+        if(!file_exists($file_name)){
+        	$file_status = "<font color=red>не найден, проверьте загружен ли он !</font>";
+            $not_found_errors ++;
+        }
+        elseif(is_writable($file_name)){
+        	$file_status = "<font color=green>Записываемый</font>";
+        }
+        else{
+            @chmod("$file_name", 0777);
+            if(is_writable($file_name)){
+            	$file_status = "<font color=green>Записываемый</font>";
+			}else{
+            	@chmod("$file_name", 0755);
+				if(is_writable($file_name)){
+	            	$file_status = "<font color=green>Записываемый</font>";
+                }else{
+					$file_status = "<font color=red>Не записываемый</font>";
+                	$chmod_errors ++;
+                }
+			}
+        }
+    	$chmod_value = @decoct(@fileperms($my_path . $file)) % 1000;
+
+	echo"<tr>
+		 <td>&nbsp;$file_name</td>
+	     <td>&nbsp; $chmod_value</td>
+	     <td>&nbsp; $file_status</td>
+		 </tr>";
+    }
+
+    if($chmod_errors == 0 and $not_found_errors == 0){
+    	$status_report = 'Проверка прошла успешно, ошибок не найдено, вы можете продолжать установку скрипта.';
+    }else{
+	    if($chmod_errors > 0){
+	    	$status_report = "<font size=5 color=red>Внимание !!!</font> при проверке прав доступа обнаружено, что у <b>$chmod_errors</b> файлов закрыт доступ на запись, вы должны установить <a href='http://www.cutephp.com/faq/index.php?faqcategory=1&faqid=19' title='Что такое CHMOD ?' target=_blank>CHMOD</a> этих файлов и папок на запись (файлы 666, папки 777) используя ваш FTP менеджер. (Для начала вы можете установить права на запись файлу <b>index.php</b> и всем файлам и папкам в папке <b>data/</b>)<br><br>Продолжение установки <font color=red size=2><b>НЕ</b></font> рекомендуется.<br>";
+	    }
+	    if($not_found_errors > 0){
+	    	$status_report .= "<font size=5 color=red>Внимание !!!</font> при проверке прав доступа обнаружено, что не найдены <b>$not_found_errors</b> файлов, проверьте наличие этих файлов в правильной папке.<br><br>Продолжение установки <font color=red size=2><b>НЕ</b></font> рекомендуется.<br>";
+	    }
+	}
+
+	echo"<tr>
+    	<td>&nbsp;<br>&nbsp;</td>
+    	<td></td>
+	    <td></td>
+	</tr><tr bgcolor='#F7F6F4'>
+    	<td bgcolor='#F7F6F4'>Общий статус установки</td>
+    	<td></td>
+	    <td></td>
+	</tr><tr>
+    	<td style=\"padding:5\" colspan=2>$status_report</td>
+
+	</tr>";
+
+  echo'</table>  </td>
+	</tr>
+	<input type=hidden name=action value=doconfig>
+    <tr>
+    <td bgcolor="#FFFFFF" width="51" height="10">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="10">
+	<p align="right">
+	&nbsp;<input type=submit value="Продолжить установку >>">';
+}
+// ********************************************************************************
+// Do Configure
+// ********************************************************************************
+elseif($action == "doconfig")
+{
+
+	$url  = preg_replace( "'/index.php'", "", $HTTP_SERVER_VARS['HTTP_REFERER']);
+	$url  = preg_replace( "'\?(.*)'", "", $url);
+    if(substr("$url", -1) == "/"){ $url = substr($url, 0, -1); }
+
+
+	echo'<div class="header"> Важные настройки</div><br />
+	Пожалуйста заполните все поля для правильной работы скрипта</td></tr></center>
+	<tr>
+      <td bgcolor="#FFFFFF" width="51" height="5">
+&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="5">
+<table width="673" height="100%" cellpadding="0">
+  <td width="671" colspan="2">&nbsp;
+  <tr>
+    <td width="222" bgcolor="#F7F6F4" > &nbsp;Полный URL путь к папке с CuteNews:
+    <td bgcolor="#F7F6F4" ><input name=url value="'.$url.'" size=38 type=text>
+      должен начинаться с Http://
+  </tr>
+  <tr>
+    <td >
+    &nbsp;
+    <td >
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    &nbsp;Имя администратора:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_username" >
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    &nbsp;Пароль администратора:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_password1"> пожалуйста <b>не</b> теряйте ваш пароль
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    &nbsp;Повторить пароль:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_password2">
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    &nbsp;Ник:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_nickname"> (выборочно)
+  </tr>
+  <tr>
+    <td  bgcolor="#F7F6F4">
+    &nbsp;Почта:
+    <td  bgcolor="#F7F6F4">
+  <input type=text size="28" name="reg_email">
+  </tr>
+  <tr>
+    <td >
+    &nbsp;
+    <td >
+  </tr>
+</table>  </td>
+</tr>
+<input type=hidden name=action value=doinstall>
+    <tr>
+  <td bgcolor="#FFFFFF" width="51" height="10">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="10">
+	<p align="right">
+	&nbsp;<input type=submit value="Продолжить установку >>">
+';
+}
+// ********************************************************************************
+// Do Install
+// ********************************************************************************
+elseif($action == "doinstall")
+{
+	if(!$reg_username or !$reg_password1 or !$url or $reg_password1 != $reg_password2 ){ die("Ошибка !!!<br /> Вы заполнили не все поля или пароль введён не правильно"); }
+	$reg_password = md5($reg_password1);
+
+	$users_file = fopen("./data/users.db.php", "w") or die("Инсталлятор не может записать данные в файл <b>./data/users.db.php</b>,<br />проверьте существование файла и его CHMOD");
+	fwrite($users_file, "<?PHP die(\"У вас нет доступа к этому файлу !!!\"); ?>\n");
+	fwrite($users_file, time()."|1|$reg_username|$reg_password|$reg_nickname|$reg_email|0|0||||\n");
+	fclose($users_file);
+
+$config = <<<HTML
+<?PHP
+
+//System Configurations
+
+\$config_version_name = "CuteNews v1.3.5";
+
+\$config_version_id = 157;
+
+\$config_http_script_dir = "$url";
+
+\$config_skin = "default";
+
+\$config_only_registered_comment = "no";
+
+\$config_auto_wrap = "44";
+
+\$config_flood_time = "15";
+
+\$config_smilies = "smile,wink,wassat,tongue,laughing,sad,angry,crying";
+
+\$config_date_adjust = 0;
+
+\$config_use_avatar = "yes";
+
+\$config_reverse_comments = "no";
+
+\$config_reverse_active = "no";
+
+\$config_show_comments_with_full = "yes";
+
+\$config_timestamp_active = "d m Y";
+
+\$config_full_popup = "no";
+
+\$config_full_popup_string = "HEIGHT=400,WIDTH=650,resizable=yes,scrollbars=yes";
+
+\$config_comment_max_long = "1500";
+
+\$config_comments_per_page = "50";
+
+\$config_allow_url_instead_mail = "yes";
+
+\$config_show_full_with_comments = "yes";
+
+\$config_timestamp_comment = "d m Y H:i";
+
+\$config_comments_popup = "no";
+
+\$config_comments_popup_string = "HEIGHT=400,WIDTH=650,resizable=yes,scrollbars=yes";
+
+?>
+HTML;
+
+
+	$con_file = fopen("./data/config.php", "w") or die("Инсталлятор не может записать данные в файл <b>./data/config.php</b>,<br />проверьте существование файла и его CHMOD");
+	fwrite($con_file, $config);
+	fclose($con_file);
+
+    $path = str_replace( '\\', '/', getcwd() );
+    echo'<div class="header"> Установка завершена</div><br />
+	CuteNews успешно установлен.</td></tr></center>
+	<tr>
+	  <td bgcolor="#FFFFFF" width="51" height="5">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="5">
+	<p align="center"><br />
+	<br />
+	Вы можете перейти на <a href="index.php">входную страницу</a> CuteNews.<br /><br>
+    Мы рекомендуем прочитаь файл README для CuteNews, это поможет вам в использовании скрипта.<br />
+	<font color="#999999">совет: вы можете удалить файл ./inc/install.mdu для большей безопасности</font>
+    </td>
+	</tr>
+    <tr>
+  <td bgcolor="#FFFFFF" width="51" height="10">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="10">
+    ';
+}
+// ********************************************************************************
+// Start Installation Wizard
+// ********************************************************************************
+else{
+	echo'<div class="header"> Добро пожаловать в установку Cute News v1.3.5</div><br />
+	Этот инсталлятор поможет вам легко установить и настроить скрипт</td></tr></center>
+	<tr>
+	  <td bgcolor="#FFFFFF" width="51" height="5">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="5">
+	</td>
+	</tr>
+    <input type=hidden name=action value="chmod_check">
+    <tr>
+  <td bgcolor="#FFFFFF" width="51" height="10">
+	&nbsp;</td><td bgcolor="#FFFFFF" width="695" height="10">
+	<p align="right">
+	&nbsp;<input type=submit value="Продолжить установку >>">
+    ';
+}
+
+?>
+&nbsp; &nbsp &nbsp;<br />&nbsp;</p>
+</td>
+</tr>
+</table></form></td></tr></table></body></html>
+<!-- Russian release by X-Coders Team [RedCat]: http://x-coders.net --> 
